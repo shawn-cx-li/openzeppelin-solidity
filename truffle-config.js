@@ -1,4 +1,15 @@
+require('dotenv').config()
 require('chai/register-should');
+const HDWalletProvider = require("truffle-hdwallet-provider");
+
+const getProvider = (network) => {
+  switch (network) {
+    case "mainnet":
+      return new HDWalletProvider(process.env.MAINNET_MNEMONIC, `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`)
+    case "ropsten":
+      return new HDWalletProvider(process.env.ROPSTEN_MNEMONIC, `https://ropsten.infura.io/v3/${process.env.INFURA_API_KEY}`)
+  }
+}
 
 const solcStable = {
   version: '0.5.7',
@@ -13,17 +24,17 @@ const useSolcNightly = process.env.SOLC_NIGHTLY === 'true';
 
 module.exports = {
   networks: {
-    development: {
-      host: 'localhost',
-      port: 8545,
-      network_id: '*', // eslint-disable-line camelcase
+    mainnet: {
+      provider: getProvider("mainnet"),
+      gasPrice: 10 * 10 ** 9, // 10 gwei,
+      gas: 4712388,
+      network_id: "1",
     },
-    coverage: {
-      host: 'localhost',
-      network_id: '*', // eslint-disable-line camelcase
-      port: 8555,
-      gas: 0xfffffffffff,
-      gasPrice: 0x01,
+    ropsten: {
+      provider: getProvider("ropsten"),
+      gasPrice: 5 * 10 ** 9, // 5 gwei,
+      gas: 4712388,
+      network_id: "3",
     },
   },
 
