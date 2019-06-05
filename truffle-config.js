@@ -32,7 +32,7 @@ module.exports = {
     },
     ropsten: {
       provider: getProvider("ropsten"),
-      gasPrice: 5 * 10 ** 9, // 5 gwei,
+      gasPrice: 10 * 10 ** 9, // 5 gwei,
       gas: 4712388,
       network_id: "3",
     },
